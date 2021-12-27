@@ -1,0 +1,2 @@
+PS C:\> wsl --shutdown
+PS C:\> notepad "$env:USERPROFILE/.wslconfig"
