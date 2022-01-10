@@ -26,6 +26,22 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+  
+  orderdb:
+    container_name: orderdb
+    environment:
+        SA_PASSWORD: "Password@1234"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "1433:1433"
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
 
   pgadmin:
     container_name: pgadmin
@@ -91,3 +107,14 @@ services:
     ports:
       - "8003:80"
 
+
+  ordering.api:
+    container_name: ordering.api 
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:OrderingConnectionString=Server=host.docker.internal,1433;Database=OrderDb;User Id=sa;Password=Password@1234;TrustServerCertificate=true"
+    # used localhost ip for database connection not the orderdb container NB must enabe TCP/IP on sql server cofiguration manager, then (host.docker.internal) as the DB server
+    #depends_on:
+    #  - orderdb
+    ports:
+      - "8004:80"
