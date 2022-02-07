@@ -15,9 +15,9 @@ namespace Ordering.API.EventBusConsumer
     {
         private readonly IMediator mediator;
         private readonly IMapper mapper;
-        private readonly ILogger logger;
+        private readonly ILogger<BasketCheckoutConsumer> logger;
 
-        public BasketCheckoutConsumer(IMediator mediator, IMapper mapper, ILogger logger)
+        public BasketCheckoutConsumer(IMediator mediator, IMapper mapper, ILogger<BasketCheckoutConsumer> logger)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

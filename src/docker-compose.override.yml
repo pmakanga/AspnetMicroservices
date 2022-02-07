@@ -80,8 +80,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CacheSettings:ConnectionString=basketdb:6379"
       - "GrpcSettings:DiscountUrl=http://discount.grpc"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - basketdb
+      - rabbitmq
     ports:
       - "8001:80"
 
@@ -113,8 +115,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:OrderingConnectionString=Server=host.docker.internal,1433;Database=OrderDb;User Id=sa;Password=Password@1234;TrustServerCertificate=true"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     # used localhost ip for database connection not the orderdb container NB must enabe TCP/IP on sql server cofiguration manager, then (host.docker.internal) as the DB server
-    #depends_on:
+    depends_on:
     #  - orderdb
+      - rabbitmq
     ports:
       - "8004:80"
